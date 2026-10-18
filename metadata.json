@@ -1,0 +1,6 @@
+{
+  "name": "Es Lumut JUNI – Galeri Rasa",
+  "description": "Katalog visual Es Lumut JUNI: varian rasa buah asli, 100% homemade, nikmat dan creamy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
