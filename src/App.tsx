@@ -32,7 +32,7 @@ const FLAVORS: Flavor[] = [
     name: 'Es Lumut Strawberry',
     tagline: 'Sensasi Manis Segar Buah Stroberi Asli',
     description: 'Paduan susu creamy lembut beraroma stroberi segar dengan serutan jeli lumut kenyal yang lumer di mulut. Dingin, lembut, dan menyegarkan.',
-    image: 'es-lumut-strawberry.jpg',
+    image: 'image/es-lumut-strawberry.jpeg',
     bgGradient: 'radial-gradient(circle at 50% 40%, rgba(244, 63, 94, 0.45) 0%, rgba(251, 113, 133, 0.25) 45%, rgba(15, 23, 42, 0.95) 100%)',
     accentColor: '#f43f5e',
     bgTitle: 'STRAWBERRY',
@@ -45,7 +45,7 @@ const FLAVORS: Flavor[] = [
     name: 'Es Lumut Mangga',
     tagline: 'Aroma Harum Tropis Mangga Manalagi',
     description: 'Rasa mangga tropis harum legit dipadukan dengan lumut jeli pandan hijau dan kuah susu kental manis yang gurih menyegarkan di setiap tegukan.',
-    image: 'es-lumut-mangga.jpg',
+    image: 'image/es-lumut-mangga.jpeg',
     bgGradient: 'radial-gradient(circle at 50% 40%, rgba(245, 158, 11, 0.45) 0%, rgba(251, 191, 36, 0.25) 45%, rgba(15, 23, 42, 0.95) 100%)',
     accentColor: '#f59e0b',
     bgTitle: 'MANGO',
@@ -58,7 +58,7 @@ const FLAVORS: Flavor[] = [
     name: 'Es Lumut Melon',
     tagline: 'Kesegaran Sejuk Honeydew Alami',
     description: 'Wangi semerbak melon manis dengan serutan jeli lumut hijau zamrud berpadu kuah susu creamy lembut yang menyejukkan dahaga seketika.',
-    image: 'es-lumut-melon.jpg',
+    image: 'image/es-lumut-melon.jpeg',
     bgGradient: 'radial-gradient(circle at 50% 40%, rgba(16, 185, 129, 0.45) 0%, rgba(52, 211, 153, 0.25) 45%, rgba(15, 23, 42, 0.95) 100%)',
     accentColor: '#10b981',
     bgTitle: 'HONEYDEW',
@@ -71,7 +71,7 @@ const FLAVORS: Flavor[] = [
     name: 'Es Lumut Blueberry',
     tagline: 'Asam Manis Bold Buah Blueberry Segar',
     description: 'Kombinasi berry ungu berpadu susu dingin dengan tekstur lumut jeli sutra kaya antioksidan. Menghadirkan rasa manis asam unik yang mewah.',
-    image: 'es-lumut-blueberry.jpg',
+    image: 'image/es-lumut-blueberry.jpeg',
     bgGradient: 'radial-gradient(circle at 50% 40%, rgba(99, 102, 241, 0.45) 0%, rgba(139, 92, 246, 0.25) 45%, rgba(15, 23, 42, 0.95) 100%)',
     accentColor: '#6366f1',
     bgTitle: 'BLUEBERRY',
@@ -84,7 +84,7 @@ const FLAVORS: Flavor[] = [
     name: 'Es Lumut Kopi',
     tagline: 'Tendangan Kopi Susu Creamy dengan Jeli Kopi',
     description: 'Kopi susu racikan khas berpadu serutan jeli lumut kopi kenyal. Sensasi perpaduan kopi harum dan susu gurih yang mantap dan melegakan dahaga.',
-    image: 'es-lumut-kopi.jpg',
+    image: 'image/es-lumut-kopi.jpeg',
     bgGradient: 'radial-gradient(circle at 50% 40%, rgba(180, 83, 9, 0.45) 0%, rgba(217, 119, 6, 0.25) 45%, rgba(15, 23, 42, 0.95) 100%)',
     accentColor: '#d97706',
     bgTitle: 'COFFEE',
@@ -97,7 +97,7 @@ const FLAVORS: Flavor[] = [
     name: 'Es Lumut Anggur',
     tagline: 'Rasa Mewah Anggur Ungu Merona',
     description: 'Manis buah anggur ungu pekat berbaur dengan susu creamy gurih dan serutan jeli lumut sutra lembut. Dingin menyegarkan lidah dan tenggorokan.',
-    image: 'es-lumut-anggur.jpg',
+    image: 'image/es-lumut-anggur.jpeg',
     bgGradient: 'radial-gradient(circle at 50% 40%, rgba(168, 85, 247, 0.45) 0%, rgba(192, 132, 252, 0.25) 45%, rgba(15, 23, 42, 0.95) 100%)',
     accentColor: '#a855f7',
     bgTitle: 'PURPLE GRAPE',
@@ -206,7 +206,7 @@ export default function App() {
         {/* Mandatory Hero Image Tag: src="hero-bg.jpg" */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
           <img 
-            src="hero-bg.jpg" 
+            src="image/hero-bg.jpeg" 
             alt="Hero Latar Utama Es Lumut JUNI" 
             className="w-full h-full object-cover opacity-25 filter brightness-75 scale-105 transform motion-safe:animate-subtle-float"
             onError={(e) => {
