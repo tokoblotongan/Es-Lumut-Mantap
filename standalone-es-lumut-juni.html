@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover">
 <title>Es Lumut JUNI – Galeri Rasa</title>
 <meta name="description" content="Katalog visual Es Lumut JUNI: varian rasa buah asli, 100% homemade, nikmat dan creamy.">
 <meta property="og:title" content="Es Lumut JUNI – Galeri Rasa">
@@ -19,124 +19,235 @@ tailwind.config = { theme: { extend: { fontFamily: {
   body: ['"DM Sans"', 'sans-serif'] } } } };
 </script>
 <style>
-  :root { --ink:#16302b; --ink-soft:rgba(22,48,43,.72); }
-  html { scroll-behavior: smooth; }
-  body { font-family:'DM Sans',sans-serif; color:var(--ink); background:#eaf6f0; overflow-x:hidden; }
+  :root { --ink:#16302b; --ink-soft:rgba(22,48,43,.75); }
+  html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+  body { font-family:'DM Sans',sans-serif; color:var(--ink); background:#eaf6f0; overflow-x:hidden; width:100%; }
   h1,h2,h3 { font-family:'Bricolage Grotesque',sans-serif; letter-spacing:-.02em; }
 
   .glass {
-    background: rgba(255,255,255,.2);
+    background: rgba(255,255,255,.22);
     backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(255,255,255,.3);
-    box-shadow: 0 10px 40px rgba(20,60,50,.12);
+    border: 1px solid rgba(255,255,255,.35);
+    box-shadow: 0 8px 32px rgba(20,60,50,.12);
   }
-  .glass-strong { background: rgba(255,255,255,.35); }
+  .glass-strong { background: rgba(255,255,255,.45); }
 
   /* Hero */
   .hero-img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 30%; }
-  .hero-shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,40,35,.35) 0%,rgba(10,40,35,.15) 40%,rgba(10,40,35,.65) 100%); }
+  .hero-shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,40,35,.4) 0%,rgba(10,40,35,.2) 40%,rgba(10,40,35,.75) 100%); }
 
   /* Showcase */
-  .bg-layer { position:absolute; inset:0; opacity:0; transition:opacity .9s ease; }
+  .showcase-sec {
+    height: 100vh;
+    height: 100dvh;
+    touch-action: pan-y;
+  }
+  .bg-layer { position:absolute; inset:0; opacity:0; transition:opacity .7s ease; pointer-events:none; }
   .bg-layer.on { opacity:1; }
-  .track { display:flex; height:100%; width:max-content; will-change:transform; }
-  .panel { width:100vw; height:100%; flex:none; display:flex; align-items:center; justify-content:center; gap:3rem; padding:6.5rem 1.25rem 5rem; }
-  .bottle { height:100%; max-height:66vh; width:auto; max-width:78vw; object-fit:cover; aspect-ratio:3/4; border-radius:2rem; border:1px solid rgba(255,255,255,.5); box-shadow:0 30px 60px rgba(0,0,0,.25); }
-  .chip { cursor:pointer; transition:all .25s; }
-  .chip.active { background:rgba(255,255,255,.7); transform:scale(1.06); }
-  .chip:focus-visible, a:focus-visible, button:focus-visible { outline:3px solid #16302b; outline-offset:3px; }
+  .track {
+    display: flex;
+    height: 100%;
+    width: max-content;
+    will-change: transform;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .panel {
+    width: 100vw;
+    height: 100%;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 6.5rem 1.5rem 5rem;
+    box-sizing: border-box;
+  }
+  .bottle {
+    height: auto;
+    max-height: 58vh;
+    width: auto;
+    max-width: 70vw;
+    object-fit: cover;
+    aspect-ratio: 3/4;
+    border-radius: 1.75rem;
+    border: 1px solid rgba(255,255,255,.6);
+    box-shadow: 0 20px 45px rgba(0,0,0,.22);
+  }
+  .chip {
+    cursor: pointer;
+    transition: all .25s ease;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .chip.active {
+    background: rgba(255,255,255,.85);
+    color: #16302b;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  }
+  .chip:focus-visible, a:focus-visible, button:focus-visible { outline:2px solid #16302b; outline-offset:2px; }
 
-  @media (max-width:767px){
-    .panel { flex-direction:column; gap:1rem; padding:5.5rem 1rem 4.5rem; }
-    .bottle { max-height:44vh; max-width:70vw; }
+  /* Custom navigation buttons */
+  .nav-arrow {
+    background: rgba(255,255,255,.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.5);
+    color: #16302b;
+    transition: all .2s;
   }
-  @media (prefers-reduced-motion:reduce){
-    html { scroll-behavior:auto; }
-    .bg-layer { transition:none; }
+  .nav-arrow:active {
+    transform: scale(0.92);
+    background: rgba(255,255,255,.7);
   }
+
+  /* Mobile and Tablet optimization */
+  @media (max-width: 1024px) {
+    .panel {
+      flex-direction: column;
+      gap: 0.85rem;
+      padding: 5.8rem 1rem 4.5rem;
+    }
+    .bottle {
+      max-height: 35vh;
+      max-width: 62vw;
+      border-radius: 1.25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .panel {
+      gap: 0.65rem;
+      padding: 5.2rem 0.75rem 4.5rem;
+    }
+    .bottle {
+      max-height: 29vh;
+      max-width: 58vw;
+    }
+  }
+
+  /* No scrollbar utility */
+  .no-sb::-webkit-scrollbar { display: none; }
+  .no-sb { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 </head>
-<body>
+<body class="selection:bg-emerald-600 selection:text-white">
 
 <!-- NAVBAR -->
-<header class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-4xl">
-  <nav class="glass rounded-full px-5 py-2.5 flex items-center justify-between" aria-label="Navigasi utama">
-    <a href="#beranda" class="font-display font-extrabold text-2xl tracking-tight">JUNI</a>
-    <ul class="flex items-center gap-1 sm:gap-2 text-sm sm:text-base font-medium">
-      <li><a class="px-3 py-1.5 rounded-full hover:bg-white/40 transition" href="#beranda">Beranda</a></li>
-      <li><a class="px-3 py-1.5 rounded-full hover:bg-white/40 transition" href="#showcase">Showcase Rasa</a></li>
-      <li><a class="px-3 py-1.5 rounded-full hover:bg-white/40 transition" href="#keunggulan">Keunggulan</a></li>
+<header class="fixed top-3 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-1.5rem)] max-w-4xl">
+  <nav class="glass rounded-full px-4 sm:px-5 py-2 sm:py-2.5 flex items-center justify-between" aria-label="Navigasi utama">
+    <a href="#beranda" class="font-display font-extrabold text-xl sm:text-2xl tracking-tight flex items-center gap-2">
+      <span class="w-8 h-8 rounded-full bg-white/40 flex items-center justify-center text-sm font-bold shadow-inner">J</span>
+      <span>JUNI</span>
+    </a>
+    <ul class="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm md:text-base font-semibold">
+      <li><a class="px-2.5 sm:px-3 py-1.5 rounded-full hover:bg-white/40 active:bg-white/50 transition" href="#beranda">Beranda</a></li>
+      <li><a class="px-2.5 sm:px-3 py-1.5 rounded-full hover:bg-white/40 active:bg-white/50 transition" href="#showcase">Rasa</a></li>
+      <li><a class="px-2.5 sm:px-3 py-1.5 rounded-full hover:bg-white/40 active:bg-white/50 transition" href="#keunggulan">Keunggulan</a></li>
     </ul>
   </nav>
 </header>
 
 <!-- HERO -->
-<section id="beranda" class="relative min-h-screen flex items-end overflow-hidden">
+<section id="beranda" class="relative min-h-[100dvh] flex items-end overflow-hidden">
   <img src="hero-bg.jpeg" alt="Teman-teman tertawa sambil menikmati Es Lumut JUNI" class="hero-img">
   <div class="hero-shade"></div>
-  <div class="relative z-10 w-full max-w-6xl mx-auto px-5 pb-14 sm:pb-20">
-    <div class="glass rounded-[2rem] p-6 sm:p-10 max-w-2xl text-white" style="background:rgba(255,255,255,.16)">
-      <h1 class="text-5xl sm:text-7xl font-extrabold leading-[1.02]">Ceriakan Harimu!</h1>
-      <p class="mt-4 text-base sm:text-xl text-white/90 max-w-xl">Kesegaran Es Lumut JUNI dengan varian rasa buah asli 100% homemade yang nikmat dan creamy.</p>
-      <a href="#showcase" class="inline-flex items-center gap-3 mt-7 px-6 py-3 rounded-full bg-white/85 text-[#16302b] font-semibold hover:bg-white transition">
-        Lihat enam rasa <i class="fa-solid fa-arrow-down text-sm"></i>
+  <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 pb-12 sm:pb-20">
+    <div class="glass rounded-[1.75rem] sm:rounded-[2rem] p-5 sm:p-10 max-w-2xl text-white" style="background:rgba(255,255,255,.18)">
+      <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 border border-white/30 text-xs sm:text-sm font-semibold mb-3">
+        <i class="fa-solid fa-leaf text-emerald-300"></i> 100% Homemade Segar
+      </span>
+      <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold leading-[1.05]">Ceriakan Harimu!</h1>
+      <p class="mt-3 sm:mt-4 text-sm sm:text-lg md:text-xl text-white/90 max-w-xl leading-relaxed">
+        Kesegaran Es Lumut JUNI dengan varian rasa buah asli 100% homemade yang nikmat dan creamy.
+      </p>
+      <a href="#showcase" class="inline-flex items-center gap-2.5 mt-5 sm:mt-7 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white/90 text-[#16302b] text-sm sm:text-base font-bold shadow-lg hover:bg-white active:scale-95 transition">
+        Lihat 6 Varian Rasa <i class="fa-solid fa-arrow-down text-xs sm:text-sm"></i>
       </a>
     </div>
   </div>
 </section>
 
-<!-- SHOWCASE (horizontal scroll) -->
-<section id="showcase" class="relative h-screen overflow-hidden" aria-label="Showcase rasa">
+<!-- SHOWCASE (horizontal scroll & touch-friendly swipe) -->
+<section id="showcase" class="showcase-sec relative overflow-hidden" aria-label="Showcase rasa">
+  <!-- Dynamic Gradient Background Layers -->
   <div id="bgLayers" aria-hidden="true"></div>
 
-  <div class="absolute top-20 sm:top-24 left-0 right-0 z-20 flex justify-center px-3">
-    <div id="chips" class="glass rounded-full p-1.5 flex gap-1 overflow-x-auto max-w-full" role="tablist"></div>
+  <!-- Top Floating Chips (Horizontal Scrollable Tabs) -->
+  <div class="absolute top-16 sm:top-20 left-0 right-0 z-30 flex justify-center px-2">
+    <div id="chips" class="glass rounded-full p-1 sm:p-1.5 flex gap-1 sm:gap-1.5 overflow-x-auto no-sb max-w-[96vw]" role="tablist"></div>
   </div>
 
+  <!-- Touch Swipe Navigation Arrows (Mobile & Tablet Friendly) -->
+  <button id="prevBtn" class="nav-arrow absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg active:scale-90" aria-label="Rasa sebelumnya">
+    <i class="fa-solid fa-chevron-left text-sm sm:text-base"></i>
+  </button>
+  <button id="nextBtn" class="nav-arrow absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg active:scale-90" aria-label="Rasa berikutnya">
+    <i class="fa-solid fa-chevron-right text-sm sm:text-base"></i>
+  </button>
+
+  <!-- Horizontal Panels Track -->
   <div class="track" id="track"></div>
 
-  <div class="absolute bottom-5 left-0 right-0 z-20 flex flex-col items-center gap-2 px-6">
-    <div class="glass rounded-full h-2 w-48 overflow-hidden"><div id="bar" class="h-full bg-white/80 rounded-full" style="width:0"></div></div>
-    <p class="text-xs font-medium text-[color:var(--ink-soft)]">Gulir ke bawah untuk menggeser rasa</p>
+  <!-- Bottom Indicator & Progress Bar -->
+  <div class="absolute bottom-3 sm:bottom-5 left-0 right-0 z-30 flex flex-col items-center gap-1.5 px-4 pointer-events-none">
+    <div class="glass rounded-full h-2 w-36 sm:w-48 overflow-hidden pointer-events-auto">
+      <div id="bar" class="h-full bg-white/90 rounded-full transition-all duration-300" style="width:16.66%"></div>
+    </div>
+    <p class="text-[11px] sm:text-xs font-semibold text-[color:var(--ink-soft)] text-center">
+      Geser jari atau tap panah untuk mengganti rasa
+    </p>
   </div>
 </section>
 
 <!-- KEUNGGULAN -->
-<section id="keunggulan" class="relative py-24 px-5" style="background:linear-gradient(160deg,#d9f1e4,#eaf6f0 45%,#f6ecd9)">
+<section id="keunggulan" class="relative py-16 sm:py-24 px-4 sm:px-6" style="background:linear-gradient(160deg,#d9f1e4,#eaf6f0 45%,#f6ecd9)">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-4xl sm:text-5xl font-extrabold max-w-xl">Segar, creamy, dibuat dari buah asli</h2>
-    <p class="mt-4 text-lg text-[color:var(--ink-soft)] max-w-xl">Setiap botol Es Lumut JUNI dibuat sendiri dengan bahan pilihan, lalu dikemas segar.</p>
-    <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      <article class="glass rounded-3xl p-6">
-        <i class="fa-solid fa-hand-holding-heart text-3xl"></i>
-        <h3 class="mt-4 text-xl font-bold">100% homemade</h3>
-        <p class="mt-2 text-[color:var(--ink-soft)]">Dibuat sendiri, bukan produksi massal.</p>
+    <span class="inline-block px-3 py-1 rounded-full bg-white/40 border border-white/50 text-xs font-bold uppercase tracking-wider text-[color:var(--ink)] mb-3">
+      Keistimewaan Produk
+    </span>
+    <h2 class="text-3xl sm:text-5xl font-extrabold max-w-xl leading-tight">Segar, creamy, dibuat dari buah asli</h2>
+    <p class="mt-3 sm:mt-4 text-base sm:text-lg text-[color:var(--ink-soft)] max-w-xl">
+      Setiap botol Es Lumut JUNI dibuat sendiri dengan bahan pilihan, lalu dikemas segar.
+    </p>
+
+    <div class="mt-10 sm:mt-12 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <article class="glass rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition hover:-translate-y-1">
+        <i class="fa-solid fa-hand-holding-heart text-2xl sm:text-3xl text-emerald-800"></i>
+        <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl font-bold">100% homemade</h3>
+        <p class="mt-1.5 text-xs sm:text-sm text-[color:var(--ink-soft)] leading-relaxed">Dibuat sendiri secara higienis, bukan produksi massal pengawet.</p>
       </article>
-      <article class="glass rounded-3xl p-6">
-        <i class="fa-solid fa-lemon text-3xl"></i>
-        <h3 class="mt-4 text-xl font-bold">Rasa buah asli</h3>
-        <p class="mt-2 text-[color:var(--ink-soft)]">Potongan dan rasa buah terasa di setiap tegukan.</p>
+
+      <article class="glass rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition hover:-translate-y-1">
+        <i class="fa-solid fa-lemon text-2xl sm:text-3xl text-amber-700"></i>
+        <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl font-bold">Rasa buah asli</h3>
+        <p class="mt-1.5 text-xs sm:text-sm text-[color:var(--ink-soft)] leading-relaxed">Aroma dan kenikmatan buah asli berpadu nyata di setiap tegukan.</p>
       </article>
-      <article class="glass rounded-3xl p-6">
-        <i class="fa-solid fa-glass-water text-3xl"></i>
-        <h3 class="mt-4 text-xl font-bold">Creamy dan segar</h3>
-        <p class="mt-2 text-[color:var(--ink-soft)]">Lembut di lidah, dingin dan menyegarkan.</p>
+
+      <article class="glass rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition hover:-translate-y-1">
+        <i class="fa-solid fa-glass-water text-2xl sm:text-3xl text-teal-800"></i>
+        <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl font-bold">Creamy dan segar</h3>
+        <p class="mt-1.5 text-xs sm:text-sm text-[color:var(--ink-soft)] leading-relaxed">Lembut di lidah, manisnya pas, sangat dingin dan melegakan dahaga.</p>
       </article>
-      <article class="glass rounded-3xl p-6">
-        <i class="fa-solid fa-bottle-water text-3xl"></i>
-        <h3 class="mt-4 text-xl font-bold">Kocok sebelum diminum</h3>
-        <p class="mt-2 text-[color:var(--ink-soft)]">Biar rasa dan tekstur tercampur rata.</p>
+
+      <article class="glass rounded-2xl sm:rounded-3xl p-5 sm:p-6 transition hover:-translate-y-1">
+        <i class="fa-solid fa-bottle-water text-2xl sm:text-3xl text-blue-800"></i>
+        <h3 class="mt-3 sm:mt-4 text-lg sm:text-xl font-bold">Kocok sebelum diminum</h3>
+        <p class="mt-1.5 text-xs sm:text-sm text-[color:var(--ink-soft)] leading-relaxed">Biar tekstur serutan lumut dan kuah susunya menyatu rata.</p>
       </article>
     </div>
   </div>
-  <footer class="max-w-6xl mx-auto mt-20 pt-6 border-t border-white/50 flex flex-wrap items-center justify-between gap-3 text-sm text-[color:var(--ink-soft)]">
-    <span class="font-display font-extrabold text-xl text-[color:var(--ink)]">JUNI</span>
-    <span>Es Lumut JUNI &copy; <span id="yr"></span></span>
+
+  <footer class="max-w-6xl mx-auto mt-16 sm:mt-20 pt-6 border-t border-white/50 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm text-[color:var(--ink-soft)]">
+    <div class="flex items-center gap-2">
+      <span class="font-display font-extrabold text-lg text-[color:var(--ink)]">JUNI</span>
+      <span>·</span>
+      <span>Es Lumut Homemade</span>
+    </div>
+    <span>Es Lumut JUNI &copy; <span id="yr"></span>. Galeri Visual Produk.</span>
   </footer>
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
   const flavors = [
     { id:'strawberry', name:'Strawberry', img:'es-lumut-strawberry.jpeg', c:['#ffd6dd','#ff9fb3','#ffe9ec'],
@@ -156,96 +267,164 @@ tailwind.config = { theme: { extend: { fontFamily: {
   const track = document.getElementById('track');
   const layers = document.getElementById('bgLayers');
   const chips = document.getElementById('chips');
+  const bar = document.getElementById('bar');
+  const showcase = document.getElementById('showcase');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
 
-  flavors.forEach((f,i)=>{
-    // background layer
+  const n = flavors.length;
+  let currentIndex = 0;
+
+  // Render elements
+  flavors.forEach((f, i) => {
+    // 1. Background layer
     const l = document.createElement('div');
-    l.className = 'bg-layer' + (i===0?' on':'');
+    l.className = 'bg-layer' + (i === 0 ? ' on' : '');
     l.style.background = `radial-gradient(circle at 20% 20%, ${f.c[0]}, transparent 55%), radial-gradient(circle at 85% 80%, ${f.c[1]}, transparent 55%), linear-gradient(135deg, ${f.c[2]}, ${f.c[0]})`;
     layers.appendChild(l);
 
-    // chip
+    // 2. Chip button
     const b = document.createElement('button');
-    b.className = 'chip px-3.5 py-1.5 rounded-full text-sm font-semibold whitespace-nowrap' + (i===0?' active':'');
+    b.className = 'chip px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap' + (i === 0 ? ' active' : '');
     b.textContent = f.name;
-    b.setAttribute('role','tab');
-    b.addEventListener('click', ()=> goTo(i));
+    b.setAttribute('role', 'tab');
+    b.setAttribute('aria-selected', i === 0);
+    b.addEventListener('click', (e) => {
+      e.preventDefault();
+      goTo(i);
+    });
     chips.appendChild(b);
 
-    // panel
+    // 3. Product Panel
     const p = document.createElement('article');
     p.className = 'panel';
     p.innerHTML = `
-      <img class="bottle" src="${f.img}" alt="Botol Es Lumut ${f.name}" loading="${i<2?'eager':'lazy'}">
-      <div class="glass rounded-[2rem] p-6 sm:p-8 w-full max-w-md">
-        <span class="glass-strong inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-semibold"><i class="fa-solid fa-leaf"></i> 100% Homemade</span>
-        <h2 class="mt-4 text-4xl sm:text-5xl font-extrabold">Es Lumut ${f.name}</h2>
-        <p class="mt-3 text-base sm:text-lg text-[color:var(--ink-soft)]">${f.desc}</p>
-        <p class="mt-4 text-sm font-medium"><i class="fa-solid fa-bottle-water mr-1.5"></i>Kocok sebelum diminum</p>
+      <img class="bottle" src="${f.img}" alt="Botol Es Lumut ${f.name}" loading="${i < 2 ? 'eager' : 'lazy'}">
+      <div class="glass rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-7 w-full max-w-sm sm:max-w-md">
+        <span class="glass-strong inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 sm:px-3 sm:py-1 text-xs sm:text-sm font-semibold">
+          <i class="fa-solid fa-leaf text-emerald-800"></i> 100% Homemade
+        </span>
+        <h2 class="mt-2.5 sm:mt-4 text-2xl sm:text-4xl md:text-5xl font-extrabold text-[color:var(--ink)]">
+          Es Lumut ${f.name}
+        </h2>
+        <p class="mt-2 sm:mt-3 text-xs sm:text-base md:text-lg text-[color:var(--ink-soft)] leading-relaxed">
+          ${f.desc}
+        </p>
+        <p class="mt-3 sm:mt-4 text-xs sm:text-sm font-medium text-[color:var(--ink)] flex items-center gap-1.5">
+          <i class="fa-solid fa-bottle-water text-emerald-800"></i>
+          <span>Kocok sebelum diminum</span>
+        </p>
       </div>`;
     track.appendChild(p);
   });
+
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  const layerEls = [...layers.children], chipEls = [...chips.children];
-  let current = 0;
-  function setActive(i){
-    if (i===current) return;
-    current = i;
-    layerEls.forEach((el,k)=>el.classList.toggle('on',k===i));
-    chipEls.forEach((el,k)=>{
-      el.classList.toggle('active',k===i);
-      el.setAttribute('aria-selected', k===i);
+  const layerEls = [...layers.children];
+  const chipEls = [...chips.children];
+
+  function goTo(index) {
+    if (index < 0) index = 0;
+    if (index >= n) index = n - 1;
+    currentIndex = index;
+
+    // Slide track using CSS transform percentage
+    track.style.transform = `translateX(-${currentIndex * 100}vw)`;
+
+    // Update background layers
+    layerEls.forEach((el, k) => el.classList.toggle('on', k === currentIndex));
+
+    // Update chips
+    chipEls.forEach((el, k) => {
+      const isActive = k === currentIndex;
+      el.classList.toggle('active', isActive);
+      el.setAttribute('aria-selected', isActive);
     });
-    chipEls[i].scrollIntoView({inline:'center', block:'nearest', behavior:'smooth'});
+
+    // Auto-scroll chip tab into view
+    chipEls[currentIndex].scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+
+    // Update progress bar width
+    bar.style.width = `${((currentIndex + 1) / n) * 100}%`;
+
+    // Button states
+    prevBtn.style.opacity = currentIndex === 0 ? '0.35' : '1';
+    nextBtn.style.opacity = currentIndex === n - 1 ? '0.35' : '1';
   }
 
-  gsap.registerPlugin(ScrollTrigger);
-  const n = flavors.length;
-  const bar = document.getElementById('bar');
-  let st;
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Previous & Next button handlers
+  prevBtn.addEventListener('click', () => goTo(currentIndex - 1));
+  nextBtn.addEventListener('click', () => goTo(currentIndex + 1));
 
-  if (reduce) {
-    // Tanpa animasi pin: geser mendatar manual
-    const sec = document.getElementById('showcase');
-    sec.style.overflowX = 'auto';
-    sec.style.scrollSnapType = 'x mandatory';
-    [...track.children].forEach(c=>c.style.scrollSnapAlign='start');
-    sec.addEventListener('scroll', ()=>{
-      const i = Math.round(sec.scrollLeft / sec.clientWidth);
-      bar.style.width = (sec.scrollLeft/(sec.scrollWidth-sec.clientWidth)*100)+'%';
-      setActive(i);
-    });
-  } else {
-    const tween = gsap.to(track, {
-      x: () => -(track.scrollWidth - innerWidth),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#showcase', pin: true, scrub: 0.6, anticipatePin: 1,
-        end: () => '+=' + (track.scrollWidth - innerWidth) * 1.1,
-        invalidateOnRefresh: true,
-        onUpdate: self => {
-          bar.style.width = (self.progress*100)+'%';
-          setActive(Math.round(self.progress*(n-1)));
-        }
-      }
-    });
-    st = tween.scrollTrigger;
-  }
+  // Touch Swipe Handling for Android, iPad, and iPhone
+  let startX = 0;
+  let startY = 0;
+  let isSwiping = false;
 
-  function goTo(i){
-    if (reduce) {
-      const sec = document.getElementById('showcase');
-      sec.scrollTo({left: i*sec.clientWidth, behavior:'smooth'});
-      return;
+  showcase.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    isSwiping = true;
+  }, { passive: true });
+
+  showcase.addEventListener('touchmove', (e) => {
+    if (!isSwiping) return;
+    const diffX = e.touches[0].clientX - startX;
+    const diffY = e.touches[0].clientY - startY;
+
+    // If horizontal swipe is dominant, prevent accidental vertical jump
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+      if (e.cancelable) e.preventDefault();
     }
-    const y = st.start + (st.end - st.start) * (i/(n-1));
-    window.scrollTo({top:y, behavior:'smooth'});
-  }
+  }, { passive: false });
 
-  // Pastikan layout dihitung ulang setelah gambar selesai dimuat
-  window.addEventListener('load', ()=> ScrollTrigger.refresh());
+  showcase.addEventListener('touchend', (e) => {
+    if (!isSwiping) return;
+    isSwiping = false;
+    const endX = e.changedTouches[0].clientX;
+    const endY = e.changedTouches[0].clientY;
+    const diffX = endX - startX;
+    const diffY = endY - startY;
+
+    // Threshold of 35px for horizontal gesture
+    if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX < 0) {
+        goTo(currentIndex + 1); // Swipe left -> Next
+      } else {
+        goTo(currentIndex - 1); // Swipe right -> Prev
+      }
+    }
+  }, { passive: true });
+
+  // Mouse wheel scroll navigation inside showcase section
+  let wheelTimeout;
+  showcase.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) < 25 && Math.abs(e.deltaX) < 25) return;
+    
+    // Allow user to scroll out of showcase if at the boundaries
+    if (e.deltaY > 0 && currentIndex === n - 1) return; // At last slide, scroll down naturally
+    if (e.deltaY < 0 && currentIndex === 0) return; // At first slide, scroll up naturally
+
+    e.preventDefault();
+    if (wheelTimeout) return;
+
+    wheelTimeout = setTimeout(() => { wheelTimeout = null; }, 350);
+    const delta = e.deltaY || e.deltaX;
+    if (delta > 0) {
+      goTo(currentIndex + 1);
+    } else {
+      goTo(currentIndex - 1);
+    }
+  }, { passive: false });
+
+  // Keyboard navigation (ArrowLeft & ArrowRight)
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') goTo(currentIndex - 1);
+    if (e.key === 'ArrowRight') goTo(currentIndex + 1);
+  });
+
+  // Initial setup
+  goTo(0);
 </script>
 </body>
 </html>
