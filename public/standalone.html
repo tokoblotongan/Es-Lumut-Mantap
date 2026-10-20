@@ -150,7 +150,7 @@ tailwind.config = { theme: { extend: { fontFamily: {
 
 <!-- HERO -->
 <section id="beranda" class="relative min-h-[100dvh] flex items-end overflow-hidden">
-  <img src="image/hero-bg.jpeg" alt="Teman-teman tertawa sambil menikmati Es Lumut JUNI" class="hero-img">
+  <img src="image/hero-bg.jpg" onerror="this.onerror=null; this.src='image/hero-bg.jpeg';" alt="Teman-teman tertawa sambil menikmati Es Lumut JUNI" class="hero-img">
   <div class="hero-shade"></div>
   <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 pb-12 sm:pb-20">
     <div class="glass rounded-[1.75rem] sm:rounded-[2rem] p-5 sm:p-10 max-w-2xl text-white" style="background:rgba(255,255,255,.18)">
@@ -249,19 +249,50 @@ tailwind.config = { theme: { extend: { fontFamily: {
 </section>
 
 <script>
+  // Tatasusunan varian rasa dengan nama fail imej sebenar di folder image/
   const flavors = [
-    { id:'strawberry', name:'Strawberry', img:'image/es-lumut-strawberry.jpeg', c:['#ffd6dd','#ff9fb3','#ffe9ec'],
-      desc:'Manis segar stroberi merah dengan susu yang lembut. Rasa favorit yang selalu terasa ceria.' },
-    { id:'mangga', name:'Mangga', img:'image/es-lumut-mangga.jpeg', c:['#fff1b8','#ffc857','#fff8dc'],
-      desc:'Potongan mangga matang yang manis legit, berpadu creamy yang kaya dan menyegarkan.' },
-    { id:'melon', name:'Melon', img:'image/es-lumut-melon.jpeg', c:['#d8f5c9','#8fd9a8','#f0fbe6'],
-      desc:'Aroma melon yang harum dengan rasa ringan dan adem, enak diminum kapan saja.' },
-    { id:'blueberry', name:'Blueberry', img:'image/es-lumut-blueberry.jpeg', c:['#dcd6ff','#9db4ff','#eef0ff'],
-      desc:'Blueberry dengan sedikit asam segar yang berpadu halus dengan tekstur creamy.' },
-    { id:'kopi', name:'Kopi', img:'image/es-lumut-kopi.jpeg', c:['#efd9c3','#c79a74','#f8ede2'],
-      desc:'Kopi susu yang pas, dengan jelly kopi yang kenyal di setiap tegukan.' },
-    { id:'anggur', name:'Anggur', img:'image/es-lumut-anggur.jpeg', c:['#e8d3f5','#b98ee0','#f6ecfc'],
-      desc:'Anggur manis yang wangi, lembut, dan segar. Rasa yang pas untuk menutup hari.' }
+    { 
+      id: 'strawberry', 
+      name: 'Strawberry', 
+      img: 'image/es_lumut_strawberry.jpg', 
+      c: ['#ffd6dd', '#ff9fb3', '#ffe9ec'],
+      desc: 'Manis segar stroberi merah dengan susu yang lembut. Rasa favorit yang selalu terasa ceria.' 
+    },
+    { 
+      id: 'mangga', 
+      name: 'Mangga', 
+      img: 'image/es_lumut_mangga.jpg', 
+      c: ['#fff1b8', '#ffc857', '#fff8dc'],
+      desc: 'Potongan mangga matang yang manis legit, berpadu creamy yang kaya dan menyegarkan.' 
+    },
+    { 
+      id: 'melon', 
+      name: 'Melon', 
+      img: 'image/es_lumut_melon.jpg', 
+      c: ['#d8f5c9', '#8fd9a8', '#f0fbe6'],
+      desc: 'Aroma melon yang harum dengan rasa ringan dan adem, enak diminum kapan saja.' 
+    },
+    { 
+      id: 'blueberry', 
+      name: 'Blueberry', 
+      img: 'image/es_lumut_blueberry.jpg', 
+      c: ['#dcd6ff', '#9db4ff', '#eef0ff'],
+      desc: 'Blueberry dengan sedikit asam segar yang berpadu halus dengan tekstur creamy.' 
+    },
+    { 
+      id: 'kopi', 
+      name: 'Kopi', 
+      img: 'image/es_lumut_coffee.jpg', 
+      c: ['#efd9c3', '#c79a74', '#f8ede2'],
+      desc: 'Kopi susu yang pas, dengan jelly kopi yang kenyal di setiap tegukan.' 
+    },
+    { 
+      id: 'anggur', 
+      name: 'Anggur', 
+      img: 'image/es_lumut_anggur.jpg', 
+      c: ['#e8d3f5', '#b98ee0', '#f6ecfc'],
+      desc: 'Anggur manis yang wangi, lembut, dan segar. Rasa yang pas untuk menutup hari.' 
+    }
   ];
 
   const track = document.getElementById('track');
@@ -295,11 +326,11 @@ tailwind.config = { theme: { extend: { fontFamily: {
     });
     chips.appendChild(b);
 
-    // 3. Product Panel
+    // 3. Product Panel (dengan fallback automatik jika fail berformat .jpeg atau .jpg)
     const p = document.createElement('article');
     p.className = 'panel';
     p.innerHTML = `
-      <img class="bottle" src="${f.img}" alt="Botol Es Lumut ${f.name}" loading="${i < 2 ? 'eager' : 'lazy'}">
+      <img class="bottle" src="${f.img}" alt="Botol Es Lumut ${f.name}" loading="${i < 2 ? 'eager' : 'lazy'}" onerror="if(!this.dataset.fallback){this.dataset.fallback='1'; this.src=this.src.endsWith('.jpg') ? this.src.replace('.jpg','.jpeg') : this.src.replace('.jpeg','.jpg');}">
       <div class="glass rounded-[1.5rem] sm:rounded-[2rem] p-4 sm:p-7 w-full max-w-sm sm:max-w-md">
         <span class="glass-strong inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 sm:px-3 sm:py-1 text-xs sm:text-sm font-semibold">
           <i class="fa-solid fa-leaf text-emerald-800"></i> 100% Homemade
@@ -328,7 +359,7 @@ tailwind.config = { theme: { extend: { fontFamily: {
     if (index >= n) index = n - 1;
     currentIndex = index;
 
-    // Slide track using CSS transform percentage
+    // Slide track using CSS transform
     track.style.transform = `translateX(-${currentIndex * 100}vw)`;
 
     // Update background layers
@@ -372,7 +403,6 @@ tailwind.config = { theme: { extend: { fontFamily: {
     const diffX = e.touches[0].clientX - startX;
     const diffY = e.touches[0].clientY - startY;
 
-    // If horizontal swipe is dominant, prevent accidental vertical jump
     if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
       if (e.cancelable) e.preventDefault();
     }
@@ -386,7 +416,6 @@ tailwind.config = { theme: { extend: { fontFamily: {
     const diffX = endX - startX;
     const diffY = endY - startY;
 
-    // Threshold of 35px for horizontal gesture
     if (Math.abs(diffX) > 35 && Math.abs(diffX) > Math.abs(diffY)) {
       if (diffX < 0) {
         goTo(currentIndex + 1); // Swipe left -> Next
@@ -401,9 +430,8 @@ tailwind.config = { theme: { extend: { fontFamily: {
   showcase.addEventListener('wheel', (e) => {
     if (Math.abs(e.deltaY) < 25 && Math.abs(e.deltaX) < 25) return;
     
-    // Allow user to scroll out of showcase if at the boundaries
-    if (e.deltaY > 0 && currentIndex === n - 1) return; // At last slide, scroll down naturally
-    if (e.deltaY < 0 && currentIndex === 0) return; // At first slide, scroll up naturally
+    if (e.deltaY > 0 && currentIndex === n - 1) return;
+    if (e.deltaY < 0 && currentIndex === 0) return;
 
     e.preventDefault();
     if (wheelTimeout) return;
